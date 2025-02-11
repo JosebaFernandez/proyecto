@@ -4,7 +4,7 @@
             <div v-for="actividad in actividades" :key="actividad.idActividad" class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="..." class="img-fluid rounded-start" alt="...">
+                        <img :src="getImageUrl(actividad.imagen)" class="img-fluid rounded-start" alt="imagen-actividad">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -23,6 +23,8 @@
 
 <script>
 
+import axios from "axios";
+
 export default {
     name: "ActividadList",
     data() {
@@ -36,7 +38,7 @@ export default {
     methods: {
         async fetchActividades() {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/api/actividades/index   "); 
+                const response = await axios.get("http://127.0.0.1:8000/api/actividades/index"); 
                 this.actividades = response.data;
             } catch (error) {
                 console.error("Error al obtener actividades:", error);
@@ -44,6 +46,9 @@ export default {
         },
         updateList(newActividad) {
             this.actividades.push(newActividad);
+        },
+        getImageUrl(imagen) {
+            return `http://localhost:8000/storage/${imagen}`;
         }
     },
 };
