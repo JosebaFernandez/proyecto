@@ -5,7 +5,7 @@
             <div class="card h-100">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="..." class="img-fluid rounded-start" alt="...">
+                        <img :src="getImageUrl(actividad.imagen)" class="img-fluid rounded-start" alt="imagen-actividad">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -27,6 +27,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
 
     name: "ActividadList",
@@ -49,6 +50,9 @@ export default {
         },
         updateList(newActividad) {
             this.actividades.push(newActividad);
+        },
+        getImageUrl(imagen) {
+            return `http://localhost:8000/storage/${imagen}`;
         }
     },
 };
