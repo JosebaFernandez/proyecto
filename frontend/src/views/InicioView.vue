@@ -1,11 +1,11 @@
 <template>
-  <div class="container main-container">
+  <div class="container">
     <div class="row">
-      <div class="col-6">
-        <Filtros ref="filtros" />
-      </div>
-      <div class="col-6">
+      <div class="col-11">
         <ActividadList ref="actividadlist" />
+      </div>  
+      <div class="col-1">
+        <Filtros ref="filtros" />
       </div>
     </div>
   </div>

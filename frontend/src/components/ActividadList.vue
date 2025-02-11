@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 col-sm-6">
             <div v-for="actividad in actividades" :key="actividad.idActividad" class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -36,7 +36,7 @@ export default {
     methods: {
         async fetchActividades() {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/api/actividades"); 
+                const response = await axios.get("http://127.0.0.1:8000/api/actividades/index   "); 
                 this.actividades = response.data;
             } catch (error) {
                 console.error("Error al obtener actividades:", error);

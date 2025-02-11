@@ -1,6 +1,14 @@
 <template>
-    <div class="row">
-        <div class="col-12">
+    <button class="btn btn-success mt-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
+        aria-controls="offcanvasWithBothOptions">Filtros</button>
+
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+        aria-labelledby="offcanvasWithBothOptionsLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Filtros</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
             <form method="post" action="#" @submit.prevent="handleSubmit">
                 <div>
                     <label for="fInicio">Desde:</label>
@@ -33,11 +41,12 @@
                     <input type="number" id="edad" name="edad" class="form-control" min="0">
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                    <button type="submit" class="btn btn-primary mt-2">Filtrar</button>
                 </div>
             </form>
         </div>
     </div>
+
 </template>
 
 
