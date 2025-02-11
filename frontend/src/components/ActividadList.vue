@@ -1,17 +1,22 @@
 <template>
     <div class="row">
-        <div class="col-12 col-sm-6">
-            <div v-for="actividad in actividades" :key="actividad.idActividad" class="card mb-3" style="max-width: 540px;">
+        <!-- Iterar sobre las actividades -->
+        <div v-for="actividad in actividades" :key="actividad.idActividad" class="col-12 col-sm-4 mb-3">
+            <div class="card h-100">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img :src="getImageUrl(actividad.imagen)" class="img-fluid rounded-start" alt="imagen-actividad">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">{{actividad.titulo}}</h5>
+                            <h5 class="card-title">{{ actividad.titulo }}</h5>
                             <p class="card-text">{{ actividad.descripcion }}</p>
-                            <p class="card-text"><small class="text-body-secondary">{{ actividad.fecha }}</small></p>
-                            <p class="card-text"><small class="text-body-secondary">{{ actividad.lugar }}</small></p>
+                            <p class="card-text">
+                                <small class="text-body-secondary">{{ actividad.fecha }}</small>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-body-secondary">{{ actividad.lugar }}</small>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -20,12 +25,11 @@
     </div>
 </template>
 
-
 <script>
-
 import axios from "axios";
 
 export default {
+
     name: "ActividadList",
     data() {
         return {

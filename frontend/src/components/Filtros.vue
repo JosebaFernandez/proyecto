@@ -1,5 +1,5 @@
 <template>
-    <button class="btn btn-success mt-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
+    <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
         aria-controls="offcanvasWithBothOptions">Filtros</button>
 
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"

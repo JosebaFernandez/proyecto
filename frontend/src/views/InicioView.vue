@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row">
+    <div class="row mt-5  ">
       <div class="col-11">
         <ActividadList ref="actividadlist" />
       </div>  
