@@ -10,8 +10,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('usu_activ', function (Blueprint $table) {
-            $table->foreignId('id_usuario')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('id_actividad')->constrained('actividades')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('actividad_id')->constrained('actividades')->cascadeOnDelete();
             $table->timestamps();
         });
     }
