@@ -1,11 +1,11 @@
 <template>
-    <div class="row">
+    <div class="row ">
         <!-- Iterar sobre las actividades -->
-        <div v-for="actividad in actividades" :key="actividad.idActividad" class="col-12 col-sm-4 mb-3">
-            <div class="card h-100">
+        <div v-for="actividad in actividades" :key="actividad.idActividad" class="col-12 col-sm-6 mb-4">
+            <div class="card my-card h-100 ">
                 <div class="row g-0">
-                    <div class="col-md-4">
-                        <img :src="getImageUrl(actividad.imagen)" class="img-fluid rounded-start" alt="imagen-actividad">
+                    <div class="col-md-4 d-flex">
+                        <img :src="getImageUrl(actividad.imagen)" class="img-fluid rounded-start flex-fill" alt="imagen-actividad">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -59,5 +59,17 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos específicos para este componente si los necesitas */
+.my-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Para suavizar la animación */
+  cursor: pointer; /* Cambiar el cursor a mano */
+}
+
+.my-card:hover {
+  transform: scale(1.03); /* Agrandar la tarjeta */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Agregar sombra para resaltar */
+}
+
+.my-card a {
+  text-decoration: none; /* Elimina subrayado del enlace */
+}
 </style>
