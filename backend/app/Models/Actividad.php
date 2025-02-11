@@ -13,7 +13,8 @@ class Actividad extends Model
         'descripcion',
         'lugar',
         'edad',
-        'fecha'
+        'fecha',
+        'imagen'
     ];
 
     public function usuarios(): BelongsToMany
