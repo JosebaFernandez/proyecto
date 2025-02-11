@@ -41,4 +41,10 @@ class UserController extends Controller
         $usuarios = User::all();
         return response()->json(['message' => 'Usuarios encontrados','data'=>$usuarios], 201);
     }
+
+    public  function destroy($id) {
+        $usuario =  User::findOrFail($id);
+        $usuario->delete();
+        return response()->json(['message' => 'Usuario eliminado','data'=>$usuario], 201);
+    }
 }
