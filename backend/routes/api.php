@@ -15,6 +15,7 @@ Route::controller(ActividadController::class)->group(function () {
     Route::post('/actividades/destroy/{id}', 'destroy');
     Route::get('/actividades/show/{id}', 'show');
     Route::get('/actividades/index', 'index');
+    Route::get('/actividades/asignar/{id}', 'asignarActividades');
 });
 
 Route::controller(UserController::class)->group(function () {

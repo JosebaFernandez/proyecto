@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Actividad;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -84,4 +85,28 @@ class ActividadController extends Controller
         $actividades = Actividad::all();
         return response()->json($actividades, 200);
     }
+
+    public function asignarActividades(Request $request, $id): \Illuminate\Http\JsonResponse
+    {
+        // Validar que los IDs de las actividades sean válidos
+        $request->validate([
+            'actividades' => 'required|array',
+            'actividades.*' => 'exists:actividades,id', // Asegura que cada ID de actividad existe
+        ]);
+
+        // Obtener el usuario por su ID
+        $user = User::find($id);
+
+        // Si el usuario no existe, retornar un error 404
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+
+        // Asignar las actividades al usuario utilizando la tabla intermedia
+        $user->actividades()->attach($request->actividades);
+
+        // Retornar una respuesta exitosa
+        return response()->json(['message' => 'Actividades asignadas correctamente'], 200);
+    }
+
 }
