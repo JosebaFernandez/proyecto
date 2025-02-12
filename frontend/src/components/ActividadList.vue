@@ -1,6 +1,5 @@
 <template>
     <div class="row">
-      <!-- Se itera sobre las actividades recibidas por prop -->
       <div v-for="actividad in actividades" :key="actividad.idActividad" class="col-12 col-sm-6 mb-4">
         <div class="card my-card h-100">
           <div class="row g-0">
@@ -36,7 +35,7 @@
     },
     methods: {
       getImageUrl(imagen) {
-        return `http://localhost:8000/storage/app/public/imagenes/${imagen}`;
+        return `http://localhost:8000/storage/${imagen}`;
       },
     },
   };
