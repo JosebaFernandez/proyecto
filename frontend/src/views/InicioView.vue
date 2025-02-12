@@ -55,36 +55,31 @@ export default {
   },
   data() {
     return {
-      actividades: [],   // Aquí se guardarán todas las actividades
+      actividades: [],   
       currentPage: 1,
       itemsPerPage: 4,
     };
   },
   computed: {
-    // Calcula el número total de páginas según la cantidad de actividades
     totalPages() {
       return Math.ceil(this.actividades.length / this.itemsPerPage);
     },
-    // Extrae las actividades que corresponden a la página actual
     paginatedActividades() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       return this.actividades.slice(start, start + this.itemsPerPage);
     },
   },
   methods: {
-    // Cambia a una página específica
     goToPage(page) {
       if (page >= 1 && page <= this.totalPages) {
         this.currentPage = page;
       }
     },
-    // Avanza a la siguiente página
     nextPage() {
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
       }
     },
-    // Retrocede a la página anterior
     prevPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -92,7 +87,6 @@ export default {
     },
   },
   mounted() {
-    // Se obtiene la información de actividades desde Laravel
     axios
       .get("http://127.0.0.1:8000/api/actividades/index")
       .then((response) => {
