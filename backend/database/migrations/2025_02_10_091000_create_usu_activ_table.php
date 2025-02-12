@@ -10,15 +10,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('usu_activ', function (Blueprint $table) {
-            $table->unsignedBigInteger('dni');
-            $table->unsignedBigInteger('id');
-
-            $table->foreign('dni')->references('dni')->on('users')->cascadeOnDelete();
-            $table->foreign('id')->references('id')->on('actividades')->cascadeOnDelete();
-
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('actividad_id')->constrained('actividades')->cascadeOnDelete();
             $table->timestamps();
         });
-
     }
 
     public function down(): void
