@@ -1,6 +1,5 @@
 <template>
     <div class="row">
-      <!-- Se itera sobre las actividades recibidas por prop -->
       <div v-for="actividad in actividades" :key="actividad.idActividad" class="col-12 col-sm-6 mb-4">
         <div class="card my-card h-100">
           <div class="row g-0">
@@ -22,6 +21,7 @@
           </div>
         </div>
       </div>
+      
     </div>
   </template>
   
@@ -36,25 +36,12 @@
     },
     methods: {
       getImageUrl(imagen) {
-        return `http://localhost:8000/storage/app/public/imagenes/${imagen}`;
+        return `http://localhost:8000/storage/${imagen}`;
       },
     },
   };
   </script>
   
   <style scoped>
-  .my-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .my-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-  }
-  
-  .my-card a {
-    text-decoration: none;
-  }
   </style>
   

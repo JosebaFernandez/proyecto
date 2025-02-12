@@ -106,10 +106,4 @@ export default {
 </script>
 
 <style scoped>
-/* Cambia el color de fondo, borde y texto de la página activa */
-.pagination .page-item.active .page-link {
-  background-color: #28a745 !important; /* Verde */
-  border-color: #28a745 !important;
-  color: #fff !important;
-}
 </style>
