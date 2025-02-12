@@ -21,10 +21,10 @@
           </div>
         </div>
       </div>
-      
+
     </div>
   </template>
-  
+
   <script>
   export default {
     name: "ActividadList",
@@ -41,7 +41,6 @@
     },
   };
   </script>
-  
+
   <style scoped>
   </style>
-  

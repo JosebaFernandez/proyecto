@@ -3,10 +3,12 @@
     <div class="row mt-5">
       <!-- Se pasa a ActividadList solo la parte de las actividades correspondiente a la página actual -->
       <div class="col-11">
-        <ActividadList :actividades="paginatedActividades" />
-      </div>  
+        <!-- Pasamos los filtros como prop a ActividadList -->
+        <ActividadList :filtros="filtros" />
+      </div>
       <div class="col-1">
-        <Filtros ref="filtros" />
+        <!-- Emitimos el evento aplicar-filtros para actualizar los filtros -->
+        <Filtros @aplicar-filtros="actualizarFiltros" />
       </div>
       <div class="col-12 d-flex justify-content-center">
         <nav aria-label="Page navigation example">
@@ -19,10 +21,10 @@
             </li>
 
             <!-- Botones de página generados dinámicamente -->
-            <li 
-              class="page-item" 
-              v-for="page in totalPages" 
-              :key="page" 
+            <li
+              class="page-item"
+              v-for="page in totalPages"
+              :key="page"
               :class="{ active: currentPage === page }">
               <a class="page-link text-success" href="#" @click.prevent="goToPage(page)">
                 {{ page }}
@@ -44,6 +46,7 @@
 
 <script>
 import axios from "axios";
+import { ref } from "vue";
 import Filtros from "../components/Filtros.vue";
 import ActividadList from "../components/ActividadList.vue";
 
@@ -55,7 +58,7 @@ export default {
   },
   data() {
     return {
-      actividades: [],   
+      actividades: [],
       currentPage: 1,
       itemsPerPage: 4,
     };
@@ -96,8 +99,20 @@ export default {
         console.error("Error al obtener actividades:", error);
       });
   },
+  setup() {
+    const filtros = ref({}); // Almacena los filtros actuales
+
+    const actualizarFiltros = (nuevosFiltros) => {
+      console.log("Nuevos filtros recibidos:", nuevosFiltros);
+      filtros.value = { ...nuevosFiltros }; // Creamos una nueva referencia para asegurar la reactividad
+    };
+
+    return { filtros, actualizarFiltros };
+  },
 };
 </script>
 
 <style scoped>
+/* Estilos específicos para esta vista si los necesitas */
 </style>
+

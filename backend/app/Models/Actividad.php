@@ -12,7 +12,10 @@ class Actividad extends Model
         'titulo',
         'descripcion',
         'lugar',
-        'edad',
+        'idioma',
+        'edad_maxima',
+        'edad_minima',
+        'hora',
         'fecha',
         'imagen'
     ];

@@ -77,10 +77,41 @@ class ActividadController extends Controller
         return response()->json($actividad, 200);
     }
 
-    public function index() {
-        $actividades = Actividad::all();
-        return response()->json($actividades, 200);
+    public function index(Request $request) {
+        $query = Actividad::query();
+
+        // Filtro por fecha
+        if ($request->filled('fInicio') && $request->filled('fFin')) {
+            $query->whereBetween('fecha', [$request->fInicio, $request->fFin]);
+        }
+
+        // Filtro por lugar
+        if ($request->filled('lugar')) {
+            $query->where('lugar', $request->lugar);
+        }
+
+        // Filtro por idioma
+        if ($request->filled('idioma')) {
+            $query->where('idioma', $request->idioma);
+        }
+
+        // Filtros por edad
+        if ($request->filled('edad_maxima')) { // Cambiado de edadMax a edad_maxima
+            $query->where('edad_maxima', '>=', $request->edad_maxima);
+        }
+        if ($request->filled('edad_minima')) { // Cambiado de edadMin a edad_minima
+            $query->where('edad_minima', '<=', $request->edad_minima);
+        }
+
+        // Filtro por hora
+        if ($request->filled('hInicio') && $request->filled('hFin')) {
+            $query->whereBetween('hora', [$request->hInicio, $request->hFin]);
+        }
+
+        return response()->json($query->get(), 200);
     }
+
+
 
     public function asignarActividades(Request $request, $id): \Illuminate\Http\JsonResponse
     {
