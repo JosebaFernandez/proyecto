@@ -10,10 +10,10 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $fillable = [
+        'dni',
         'nombre',
         'apellido1',
         'apellido2',
-        'dni',
         'fecha_nacimiento',
     ];
 

@@ -100,9 +100,4 @@ export default {
 </script>
 
 <style scoped>
-.pagination .page-item.active .page-link {
-  background-color: #28a745 !important; 
-  border-color: #28a745 !important;
-  color: #fff !important;
-}
 </style>

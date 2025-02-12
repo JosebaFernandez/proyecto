@@ -21,6 +21,7 @@
           </div>
         </div>
       </div>
+      
     </div>
   </template>
   
@@ -42,18 +43,5 @@
   </script>
   
   <style scoped>
-  .my-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .my-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-  }
-  
-  .my-card a {
-    text-decoration: none;
-  }
   </style>
   
