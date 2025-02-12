@@ -15,7 +15,10 @@ class ActividadController extends Controller
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string|max:255',
             'lugar' => 'required|string|max:255',
-            'edad' => 'required|string|max:255',
+            'edad_maxima' => 'required|string|max:255',
+            'edad_minima' => 'required|string|max:255',
+            'idioma' => 'required|string|max:255',
+            'hora' => 'required|string|max:255',
             'fecha' => 'required|date|after_or_equal:today',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         ]);
@@ -33,7 +36,10 @@ class ActividadController extends Controller
             'titulo' => $request->get('titulo'),
             'descripcion' => $request->get('descripcion'),
             'lugar' => $request->get('lugar'),
-            'edad' => $request->get('edad'),
+            'edad_maxima' => $request->get('edad_maxima'),
+            'edad_minima' => $request->get('edad_minima'),
+            'idioma' => $request->get('idioma'),
+            'hora' => $request->get('hora'),
             'fecha' => $request->get('fecha'),
             'imagen' => $imagePath
         ]);
@@ -47,7 +53,10 @@ class ActividadController extends Controller
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string|max:255',
             'lugar' => 'required|string|max:255',
-            'edad' => 'required|string|max:255',
+            'edad_minima' => 'required|string|max:255',
+            'edad_maxima' => 'required|integer|min:0|gte:edad_minima', // edad_maxima debe ser mayor o igual a edad_minima
+            'idioma' => 'required|string|max:255',
+            'hora' => 'required|string|max:255',
             'fecha' => 'required|date|after_or_equal:today'
         ]);
         if ($validator->fails()) {
@@ -60,7 +69,10 @@ class ActividadController extends Controller
             'titulo' => $request->get('titulo'),
             'descripcion' => $request->get('descripcion'),
             'lugar' => $request->get('lugar'),
-            'edad' => $request->get('edad'),
+            'edad_minima' => $request->get('edad_minima'),
+            'edad_maxima' => $request->get('edad_maxima'),
+            'idioma' => $request->get('idioma'),
+            'hora' => $request->get('hora'),
             'fecha' => $request->get('fecha')
         ]);
         return response()->json($actividad, 200);
