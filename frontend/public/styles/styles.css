@@ -1,0 +1,19 @@
+.my-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.my-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+.my-card a {
+  text-decoration: none;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+  color: #fff !important;
+}
+
+/*# sourceMappingURL=styles.css.map */
