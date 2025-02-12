@@ -15,7 +15,10 @@ class ActividadController extends Controller
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string|max:255',
             'lugar' => 'required|string|max:255',
-            'edad' => 'required|string|max:255',
+            'edad_maxima' => 'required|string|max:255',
+            'edad_minima' => 'required|string|max:255',
+            'idioma' => 'required|string|max:255',
+            'hora' => 'required|string|max:255',
             'fecha' => 'required|date|after_or_equal:today',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         ]);
@@ -33,7 +36,10 @@ class ActividadController extends Controller
             'titulo' => $request->get('titulo'),
             'descripcion' => $request->get('descripcion'),
             'lugar' => $request->get('lugar'),
-            'edad' => $request->get('edad'),
+            'edad_maxima' => $request->get('edad_maxima'),
+            'edad_minima' => $request->get('edad_minima'),
+            'idioma' => $request->get('idioma'),
+            'hora' => $request->get('hora'),
             'fecha' => $request->get('fecha'),
             'imagen' => $imagePath
         ]);
@@ -47,7 +53,10 @@ class ActividadController extends Controller
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string|max:255',
             'lugar' => 'required|string|max:255',
-            'edad' => 'required|string|max:255',
+            'edad_minima' => 'required|string|max:255',
+            'edad_maxima' => 'required|integer|min:0|gte:edad_minima', // edad_maxima debe ser mayor o igual a edad_minima
+            'idioma' => 'required|string|max:255',
+            'hora' => 'required|string|max:255',
             'fecha' => 'required|date|after_or_equal:today'
         ]);
         if ($validator->fails()) {
@@ -60,7 +69,10 @@ class ActividadController extends Controller
             'titulo' => $request->get('titulo'),
             'descripcion' => $request->get('descripcion'),
             'lugar' => $request->get('lugar'),
-            'edad' => $request->get('edad'),
+            'edad_minima' => $request->get('edad_minima'),
+            'edad_maxima' => $request->get('edad_maxima'),
+            'idioma' => $request->get('idioma'),
+            'hora' => $request->get('hora'),
             'fecha' => $request->get('fecha')
         ]);
         return response()->json($actividad, 200);
@@ -77,10 +89,41 @@ class ActividadController extends Controller
         return response()->json($actividad, 200);
     }
 
-    public function index() {
-        $actividades = Actividad::all();
-        return response()->json($actividades, 200);
+    public function index(Request $request) {
+        $query = Actividad::query();
+
+        // Filtro por fecha
+        if ($request->filled('fInicio') && $request->filled('fFin')) {
+            $query->whereBetween('fecha', [$request->fInicio, $request->fFin]);
+        }
+
+        // Filtro por lugar
+        if ($request->filled('lugar')) {
+            $query->where('lugar', $request->lugar);
+        }
+
+        // Filtro por idioma
+        if ($request->filled('idioma')) {
+            $query->where('idioma', $request->idioma);
+        }
+
+        // Filtros por edad
+        if ($request->filled('edad_maxima')) { // Cambiado de edadMax a edad_maxima
+            $query->where('edad_maxima', '>=', $request->edad_maxima);
+        }
+        if ($request->filled('edad_minima')) { // Cambiado de edadMin a edad_minima
+            $query->where('edad_minima', '<=', $request->edad_minima);
+        }
+
+        // Filtro por hora
+        if ($request->filled('hInicio') && $request->filled('hFin')) {
+            $query->whereBetween('hora', [$request->hInicio, $request->hFin]);
+        }
+
+        return response()->json($query->get(), 200);
     }
+
+
 
     public function asignarActividades(Request $request, $id): \Illuminate\Http\JsonResponse
     {
