@@ -1,24 +1,55 @@
 <template>
     <div class="header">
-        <nav class="navbar bg-success" style="--bs-bg-opacity: .5;">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="../assets/logo_grande.svg" alt="Bootstrap" width="250px">
-                </a>
-                <div class="d-flex">
-                    <!-- Botón para ir al formulario -->
-                    <router-link to="/crear-actividad" class="btn btn-outline-light me-2">
-                        Crear Actividad
-                    </router-link>
-                    <!-- Botón de Login -->
-                    <button class="btn btn-outline-light" type="button">Login</button>
-                </div>
-            </div>
-        </nav>
+      <nav class="navbar bg-success" style="--bs-bg-opacity: .5;">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <img src="../assets/logo_grande.svg" alt="Bootstrap" width="250px">
+          </a>
+          <div class="d-flex" role="login">
+            <button class="btn btn-outline-light mr-10" type="button" @click="openModal">Login</button>
+          </div>
+        </div>
+      </nav>
     </div>
-</template>
-
-<script>
-</script>
-
-<style scoped></style>
+    <ModalLogin />
+    <ModalRegistro />
+  </template>
+  
+  <script>
+  import { defineComponent, onMounted } from 'vue';
+  import ModalLogin from './ModalLogin.vue'; 
+  import { Modal as bootstrapModal } from 'bootstrap';
+  
+  export default defineComponent({
+    components: {
+      ModalLogin, // Registra el componente ModalLogin
+    },
+    setup() {
+      let modalInstance;
+  
+      // Función para abrir el modal
+      const openModal = () => {
+        if (modalInstance) {
+          modalInstance.show(); // Abre el modal cuando se hace clic en el botón
+        }
+      };
+  
+      // Inicialización del modal cuando el componente es montado
+      onMounted(() => {
+        const modalElement = document.getElementById('bootstrapModal');
+        if (modalElement) {
+          modalInstance = new bootstrapModal(modalElement);
+        } else {
+          console.error("No se encontró el modal con el id 'bootstrapModal'");
+        }
+      });
+  
+      return { openModal }; // Devuelve la función para que sea accesible en el template
+    },
+  });
+  </script>
+  
+  <style scoped>
+  /* Estilos para el header si es necesario */
+  </style>
+  
