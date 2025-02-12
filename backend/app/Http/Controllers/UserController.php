@@ -11,10 +11,10 @@ class UserController extends Controller
 
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
+            'dni' => 'required|string|max:255|unique:users',
             'nombre' => 'required|string|max:255',
             'apellido1' => 'required|string|max:255',
             'apellido2' => 'required|string|max:255',
-            'dni' => 'required|string|max:255|unique:users',
             'fecha_nacimiento' => 'required|date',
         ]);
         if ($validator->fails()) {
@@ -22,10 +22,10 @@ class UserController extends Controller
         }
 
         $usuario = User::create([
+            'dni'=> $request->get('dni'),
             'nombre'=> $request->get('nombre'),
             'apellido1'=> $request->get('apellido1'),
             'apellido2'=> $request->get('apellido2'),
-            'dni'=> $request->get('dni'),
             'fecha_nacimiento'=> $request->get('fecha_nacimiento'),
         ]);
 
