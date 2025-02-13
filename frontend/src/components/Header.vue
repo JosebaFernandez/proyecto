@@ -11,18 +11,17 @@
         </div>
       </nav>
     </div>
-    <ModalLogin />
-    <ModalRegistro />
+    <ModalAcceso />
   </template>
   
   <script>
   import { defineComponent, onMounted } from 'vue';
-  import ModalLogin from './ModalLogin.vue'; 
   import { Modal as bootstrapModal } from 'bootstrap';
-  
+  import ModalAcceso from './ModalAcceso.vue';
+ 
   export default defineComponent({
     components: {
-      ModalLogin, // Registra el componente ModalLogin
+      ModalAcceso, // Registra el componente ModalLogin
     },
     setup() {
       let modalInstance;
