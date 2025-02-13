@@ -7,7 +7,6 @@
                     <h5 class="modal-title" id="exampleModalLabel">{{ isLogin ? 'Iniciar sesión' : 'Registrarse' }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <!-- Formulario de acceso: En función de si es registro o login muestra unos campos u otros -->
                 <div class="modal-body">
                     <form @submit.prevent="validarEnvio">
 
@@ -89,7 +88,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 import axios from 'axios';
 
 // Variables reactivas para almacenar los datos del formulario
@@ -103,6 +102,9 @@ const confirmPassword = ref('');
 const errorMessage = ref('');
 const successMessage = ref('');
 const isLogin = ref(true);
+
+// Define los eventos que el componente puede emitir
+const emit = defineEmits(['loginSuccess']);
 
 //Función para validar los datos antes de enviar la solicitud al servidor
 const validarEnvio = async () => {
@@ -183,6 +185,8 @@ const validarEnvio = async () => {
                 localStorage.setItem('fechaNacimiento', JSON.stringify(response.data.fecha_nacimiento));
                 localStorage.setItem('DNI', JSON.stringify(response.data.dni));
                 
+                // Emite el evento de éxito de inicio de sesión
+                emit('loginSuccess');
             }
             else {
                 successMessage.value = 'Registro exitoso.';
