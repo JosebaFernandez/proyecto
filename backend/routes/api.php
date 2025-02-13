@@ -19,8 +19,8 @@ Route::controller(ActividadController::class)->group(function () {
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::post('/usuarios/store', 'store');
+    Route::post('/usuarios/register', 'store');
     Route::get('/usuarios/index', 'index');
     Route::get('/usuarios/show/{id}', 'show');
-    Route::get('/usuarios/index', 'index');
+    Route::post('/usuarios/login', 'login');
 });

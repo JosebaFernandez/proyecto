@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -16,20 +17,43 @@ class UserController extends Controller
             'apellido1' => 'required|string|max:255',
             'apellido2' => 'required|string|max:255',
             'fecha_nacimiento' => 'required|date',
+            'password' => 'required|string|min:6',
+            'confirm_password' => 'required|string|min:6|same:password',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
         $usuario = User::create([
-            'dni'=> $request->get('dni'),
             'nombre'=> $request->get('nombre'),
             'apellido1'=> $request->get('apellido1'),
             'apellido2'=> $request->get('apellido2'),
+            'dni'=> $request->get('dni'),
             'fecha_nacimiento'=> $request->get('fecha_nacimiento'),
+            'password'=> bcrypt($request->get('password')),
         ]);
 
         return response()->json(['message' => 'Usuario creado','data'=>$usuario], 201);
+    }
+
+    public function login(Request $request) {
+        $validator = Validator::make($request->all(), [
+           'dni' => 'required|string|max:255',
+           'password' => 'required|string|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $user = User::where('dni', $request->get('dni'))->first();
+
+        if ($user) {
+            if (Hash::check($request->get('password'), $user->password)) {
+                return response()->json($user, 200);
+            }
+        }
+        return response()->json(['message' => 'Datos incorrectos'], 400);
     }
 
     public function show($id) {
