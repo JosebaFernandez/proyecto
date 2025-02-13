@@ -182,6 +182,7 @@ const validarEnvio = async () => {
                 localStorage.setItem('apellido2', JSON.stringify(response.data.apellido2));
                 localStorage.setItem('fechaNacimiento', JSON.stringify(response.data.fecha_nacimiento));
                 localStorage.setItem('DNI', JSON.stringify(response.data.dni));
+                
             }
             else {
                 successMessage.value = 'Registro exitoso.';

@@ -90,8 +90,6 @@
   </template>
   
   <script>
-  import { Field, Form } from "vee-validate";
-  import * as yup from "yup";
   import axios from "axios";
   import { useRouter } from "vue-router";
   
