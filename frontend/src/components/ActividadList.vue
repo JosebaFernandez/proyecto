@@ -4,8 +4,7 @@
             <div class="card my-card h-100">
                 <div class="row g-0">
                     <div class="col-md-4 d-flex">
-                        <img :src="getImageUrl(actividad.imagen)" class="img-fluid rounded-start flex-fill"
-                            alt="imagen-actividad">
+                        <img :src="getImageUrl(actividad.imagen)" class="img-fluid rounded-start flex-fill" alt="imagen-actividad">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -31,29 +30,48 @@ import axios from "axios";
 export default {
     name: "ActividadList",
     props: {
-        
         filtros: {
             type: Object,
-            default: () => ({}), // Asegura que los filtros sean un objeto vacío por defecto
+            default: () => ({})
         },
+        currentPage: {
+            type: Number,
+            required: true
+        },
+        itemsPerPage: {
+            type: Number,
+            required: true
+        }
     },
     data() {
         return {
             actividades: [],
+            totalPages: 1,
         };
     },
     watch: {
-        // Reaccionamos cuando los filtros cambian
-        filtros: "fetchActividades",
+        filtros: {
+            handler: "fetchActividades",
+            deep: true
+        },
+        currentPage: "fetchActividades"
+    },
+    mounted() {
+        this.fetchActividades();
     },
     methods: {
-       async fetchActividades() {
+        async fetchActividades() {
             try {
-                // Si los filtros están vacíos, no los enviamos
                 const response = await axios.get("http://127.0.0.1:8000/api/actividades/index", {
-                    params: Object.keys(this.filtros).length ? this.filtros : {} // Enviamos filtros solo si existen
+                    params: {
+                        ...this.filtros,
+                        page: this.currentPage,
+                        per_page: this.itemsPerPage
+                    }
                 });
-                this.actividades = response.data;
+                this.actividades = response.data.data || response.data;
+                this.totalPages = response.data.total_pages || Math.ceil(this.actividades.length / this.itemsPerPage);
+                this.$emit("update-total-pages", this.totalPages);
             } catch (error) {
                 console.error("Error al obtener actividades:", error);
             }
