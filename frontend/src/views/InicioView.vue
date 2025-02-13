@@ -1,37 +1,28 @@
+// InicioView.vue
 <template>
   <div class="container">
     <div class="row mt-5">
-      <!-- Se pasa a ActividadList solo la parte de las actividades correspondiente a la página actual -->
       <div class="col-11">
-        <!-- Pasamos los filtros como prop a ActividadList -->
-        <ActividadList :filtros="filtros" />
+        <ActividadList :filtros="filtros" :current-page="currentPage" :items-per-page="itemsPerPage" @update-total-pages="setTotalPages" />
       </div>
       <div class="col-1">
-        <!-- Emitimos el evento aplicar-filtros para actualizar los filtros -->
         <Filtros @aplicar-filtros="actualizarFiltros" />
       </div>
       <div class="col-12 d-flex justify-content-center">
         <nav aria-label="Page navigation example">
           <ul class="pagination">
-            <!-- Botón "Anterior" -->
             <li class="page-item" :class="{ disabled: currentPage === 1 }">
               <a class="page-link text-success" href="#" aria-label="Previous" @click.prevent="prevPage">
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
 
-            <!-- Botones de página generados dinámicamente -->
-            <li
-              class="page-item"
-              v-for="page in totalPages"
-              :key="page"
-              :class="{ active: currentPage === page }">
+            <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
               <a class="page-link text-success" href="#" @click.prevent="goToPage(page)">
                 {{ page }}
               </a>
             </li>
 
-            <!-- Botón "Siguiente" -->
             <li class="page-item" :class="{ disabled: currentPage === totalPages }">
               <a class="page-link text-success" href="#" aria-label="Next" @click.prevent="nextPage">
                 <span aria-hidden="true">&raquo;</span>
@@ -45,8 +36,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import { ref } from "vue";
 import Filtros from "../components/Filtros.vue";
 import ActividadList from "../components/ActividadList.vue";
 
@@ -58,19 +47,11 @@ export default {
   },
   data() {
     return {
-      actividades: [],
+      filtros: {},
       currentPage: 1,
       itemsPerPage: 4,
+      totalPages: 1,
     };
-  },
-  computed: {
-    totalPages() {
-      return Math.ceil(this.actividades.length / this.itemsPerPage);
-    },
-    paginatedActividades() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      return this.actividades.slice(start, start + this.itemsPerPage);
-    },
   },
   methods: {
     goToPage(page) {
@@ -88,31 +69,13 @@ export default {
         this.currentPage--;
       }
     },
-  },
-  mounted() {
-    axios
-      .get("http://127.0.0.1:8000/api/actividades/index")
-      .then((response) => {
-        this.actividades = response.data;
-      })
-      .catch((error) => {
-        console.error("Error al obtener actividades:", error);
-      });
-  },
-  setup() {
-    const filtros = ref({}); // Almacena los filtros actuales
-
-    const actualizarFiltros = (nuevosFiltros) => {
-      console.log("Nuevos filtros recibidos:", nuevosFiltros);
-      filtros.value = { ...nuevosFiltros }; // Creamos una nueva referencia para asegurar la reactividad
-    };
-
-    return { filtros, actualizarFiltros };
-  },
+    actualizarFiltros(nuevosFiltros) {
+      this.filtros = { ...nuevosFiltros };
+      this.currentPage = 1;
+    },
+    setTotalPages(total) {
+      this.totalPages = total;
+    }
+  }
 };
 </script>
-
-<style scoped>
-/* Estilos específicos para esta vista si los necesitas */
-</style>
-

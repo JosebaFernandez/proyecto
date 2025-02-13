@@ -88,7 +88,6 @@ class ActividadController extends Controller
         $actividad = Actividad::findOrFail($id);
         return response()->json($actividad, 200);
     }
-
     public function index(Request $request) {
         $query = Actividad::query();
 
@@ -108,11 +107,11 @@ class ActividadController extends Controller
         }
 
         // Filtros por edad
-        if ($request->filled('edad_maxima')) { // Cambiado de edadMax a edad_maxima
-            $query->where('edad_maxima', '>=', $request->edad_maxima);
+        if ($request->filled('edad_maxima')) {
+            $query->where('edad_maxima', '<=', $request->edad_maxima);
         }
-        if ($request->filled('edad_minima')) { // Cambiado de edadMin a edad_minima
-            $query->where('edad_minima', '<=', $request->edad_minima);
+        if ($request->filled('edad_minima')) {
+            $query->where('edad_minima', '>=', $request->edad_minima);
         }
 
         // Filtro por hora
@@ -120,8 +119,10 @@ class ActividadController extends Controller
             $query->whereBetween('hora', [$request->hInicio, $request->hFin]);
         }
 
+        // Si no se aplican filtros, devolver todas las actividades
         return response()->json($query->get(), 200);
     }
+
 
 
 

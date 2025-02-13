@@ -43,11 +43,13 @@
                 <div class="row">
                     <div class="col-6">
                         <label for="edadMin">Edad mínima:</label>
-                        <input type="number" id="edadMin" name="edadMin" class="form-control" min="0" v-model="filtros.edad_minima">
+                        <input type="number" id="edadMin" name="edadMin" class="form-control" min="0"
+                            v-model="filtros.edad_minima">
                     </div>
                     <div class="col-6">
                         <label for="edadMax">Edad máxima:</label>
-                        <input type="number" id="edadMax" name="edadMax" class="form-control" min="0" v-model="filtros.edad_maxima">
+                        <input type="number" id="edadMax" name="edadMax" class="form-control" min="0"
+                            v-model="filtros.edad_maxima">
                     </div>
                 </div>
                 <div class="row">
@@ -61,7 +63,12 @@
                     </div>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-success mt-2">Filtrar</button>
+                    <button type="submit" class="btn btn-success m-2" @click="handleSubmit">
+                        Filtrar
+                    </button>
+                    <button type="button" class="btn btn-outline-success m-2" @click="resetFilters">
+                        Resetear Filtros
+                    </button>
                 </div>
             </form>
         </div>
@@ -84,6 +91,7 @@ const filtros = ref({
     hFin: ""
 });
 
+// Función para manejar el envío del formulario
 const handleSubmit = () => {
     // Filtrar campos vacíos para no enviar filtros innecesarios
     const filtrosAplicados = Object.fromEntries(
@@ -92,5 +100,22 @@ const handleSubmit = () => {
 
     emit("aplicar-filtros", filtrosAplicados);
 };
-</script>
 
+// Función para resetear los filtros
+const resetFilters = () => {
+    // Restaurar los valores a los predeterminados
+    filtros.value = {
+        fInicio: "",
+        fFin: "",
+        lugar: "",
+        idioma: "",
+        edad_minima: "",
+        edad_maxima: "",
+        hInicio: "",
+        hFin: ""
+    };
+
+    // Emitir un evento con los filtros vacíos para recargar las actividades
+    emit("aplicar-filtros", {});
+};
+</script>
