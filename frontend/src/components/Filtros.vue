@@ -25,9 +25,21 @@
                         <label for="lugar">Lugar: </label>
                         <select class="form-select" v-model="filtros.lugar">
                             <option value="">Selecciona</option>
-                            <option value="C.C. Hegoalde">C.C. Hegoalde</option>
+                            <option value="C.C. Abetxuko">C.C. Abetxuko</option>
+                            <option value="C.C. Aldabe">C.C. Aldabe</option>
+                            <option value="C.C. Arana">C.C. Arana</option>
+                            <option value="C.C. Ariznabarra">C.C. Ariznabarra</option>
+                            <option value="C.C. Arriaga">C.C. Arriaga</option>
+                            <option value="C.C. El Campillo">C.C. El Campillo</option>
                             <option value="C.C. El Pilar">C.C. El Pilar</option>
+                            <option value="C.C. Hegoalde">C.C. Hegoalde</option>
                             <option value="C.C. Ibaiondo">C.C. Ibaiondo</option>
+                            <option value="C.C. Iparralde">C.C. Iparralde</option>
+                            <option value="C.C. Judimendi">C.C. Judimendi</option>
+                            <option value="C.C. Lakua">C.C. Lakua</option>
+                            <option value="C.C. Salburua">C.C. Salburua</option>
+                            <option value="C.C. Zabalgana">C.C. Zabalgana</option>
+
                         </select>
                     </div>
                     <div class="col-6">
