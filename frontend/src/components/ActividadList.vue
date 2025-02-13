@@ -16,6 +16,8 @@
                             <p class="card-text">
                                 <small class="text-body-secondary">{{ actividad.lugar }}</small>
                             </p>
+
+                            <butto class="btn btn-outline-success">Apuntarse</butto>
                         </div>
                     </div>
                 </div>
