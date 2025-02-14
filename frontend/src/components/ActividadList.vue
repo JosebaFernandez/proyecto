@@ -8,7 +8,6 @@
               <div class="row g-0">
                 <div class="col-md-4 d-flex">
                   <img :src="getImageUrl(actividad.imagen)" class="img-fluid rounded-start flex-fill" alt="imagen-actividad">
-
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
@@ -26,6 +25,7 @@
             </div>
           </div>
         </div>
+      </div>
       <div v-else class="text-center text-muted">
         No hay actividades disponibles.
       </div>
@@ -71,7 +71,7 @@ export default {
   methods: {
     async fetchActividades() {
       try {
-        console.log(`Cargando página ${this.currentPage} con ${this.itemsPerPage} actividades por página`);
+        console.log("Cargando página ${this.currentPage} con ${this.itemsPerPage} actividades por página");
 
         const response = await axios.get("http://127.0.0.1:8000/api/actividades/index", {
           params: {

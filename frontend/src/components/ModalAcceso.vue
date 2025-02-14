@@ -181,14 +181,10 @@ const validarEnvio = async () => {
         if (response.status === 200 || response.status === 201) {
             //Si es login guarda los datos en LocalStorage y emite el evento
             if (isLogin.value) {
-                successMessage.value = 'Inicio de sesión exitoso.';
-                localStorage.setItem('id', JSON.stringify(response.data.id));
-                localStorage.setItem('nombre', JSON.stringify(response.data.nombre));
-                localStorage.setItem('apellido1', JSON.stringify(response.data.apellido1));
-                localStorage.setItem('apellido2', JSON.stringify(response.data.apellido2));
-                localStorage.setItem('fechaNacimiento', JSON.stringify(response.data.fecha_nacimiento));
-                localStorage.setItem('DNI', JSON.stringify(response.data.dni));
-                
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+                localStorage.setItem('role', response.data.role);
+                successMessage.value = `Bienvenido, ${response.data.user.nombre}.`;
+
                 emit('loginSuccess');
             }
             else {
