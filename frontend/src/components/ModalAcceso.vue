@@ -1,9 +1,9 @@
-<!-- src/components/ModalAcceso.vue -->
 <template>
     <div class="modal fade" id="bootstrapModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                    <!--Operador ternario para determinar el titulo-->
                     <h5 class="modal-title" id="exampleModalLabel">{{ isLogin ? 'Iniciar sesión' : 'Registrarse' }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -47,6 +47,7 @@
                         </div>
                     </form>
 
+                    <!--Enlace para cambiar entre el formulario de inicio de sesión y el de registro-->
                     <div class="mt-3">
                         <p class="text-center">
                             {{ isLogin ? "¿No tienes cuenta?" : "¿Ya tienes cuenta?" }}
@@ -135,6 +136,7 @@ const validarEnvio = async () => {
             return;
         }
 
+        //Valida que la fecha no pueda ser mayor a la fecha actual
         if(fechaNacimiento.value > new Date().toISOString().split('T')[0]) {
             errorMessage.value = 'La fecha de nacimiento no puede ser mayor a la fecha actual.';
             mostrarToast('error');
@@ -160,7 +162,7 @@ const validarEnvio = async () => {
         //Genera la URL de la solicitud con un operador ternario
         const url = isLogin.value ? 'http://localhost:8000/api/usuarios/login' : 'http://localhost:8000/api/usuarios/register';
 
-        //Crea un objeto con los datos del formulario
+        //Crea un objeto con los datos del formulario. En función de si es login o registro mandará unos datos u otros
         const data = isLogin.value
             ? { dni: dni.value, password: password.value }
             : {
@@ -177,6 +179,7 @@ const validarEnvio = async () => {
 
         //Comprueba la respuesta del servidor y realiza las acciones consecuentes
         if (response.status === 200 || response.status === 201) {
+            //Si es login guarda los datos en LocalStorage y emite el evento
             if (isLogin.value) {
                 successMessage.value = 'Inicio de sesión exitoso.';
                 localStorage.setItem('nombre', JSON.stringify(response.data.nombre));
@@ -185,7 +188,6 @@ const validarEnvio = async () => {
                 localStorage.setItem('fechaNacimiento', JSON.stringify(response.data.fecha_nacimiento));
                 localStorage.setItem('DNI', JSON.stringify(response.data.dni));
                 
-                // Emite el evento de éxito de inicio de sesión
                 emit('loginSuccess');
             }
             else {
@@ -204,6 +206,7 @@ const validarEnvio = async () => {
         mostrarToast('error');
     }
 
+    //Limpia los campos del formulario
     nombre.value = '';
     apellido1.value = '';
     apellido2.value = '';
@@ -213,6 +216,7 @@ const validarEnvio = async () => {
     confirmPassword.value = '';
     errorMessage.value = '';
 
+    //Oculta el modal
     const modalElement = document.getElementById('bootstrapModal');
     const modalInstance = new bootstrap.Modal(modalElement);
     modalInstance.hide();

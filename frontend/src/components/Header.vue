@@ -7,8 +7,8 @@
           <img src="../assets/logo_grande.svg" alt="Bootstrap" width="250px">
         </a>
         <div class="d-flex">
-          <!-- Botón para ir a /crear-actividad -->
-          <button class="btn btn-outline-light mr-2" type="button" @click="goToCrearActividad">
+          <!-- Botón para ir a /crear-actividad, solo visible si está autenticado -->
+          <button v-if="isAuthenticated" class="btn btn-outline-light mr-2" type="button" @click="goToCrearActividad">
             Crear Actividad
           </button>
           <!-- Botón de Login -->
@@ -76,6 +76,12 @@ export default defineComponent({
       // Inicializar tooltips
       const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
       tooltipTriggerList.map((tooltipTriggerEl) => new bootstrapTooltip(tooltipTriggerEl));
+
+      // Comprobar el estado de autenticación en el localStorage
+      const dni = localStorage.getItem('DNI');
+      if (dni) {
+        isAuthenticated.value = true;
+      }
     });
 
     const handleLoginSuccess = () => {
