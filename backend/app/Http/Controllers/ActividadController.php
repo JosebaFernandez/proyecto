@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Actividad;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ActividadController extends Controller
@@ -155,6 +156,16 @@ class ActividadController extends Controller
         $user->actividades()->attach($data['actividad_id']); // Adjuntar actividad
 
         return response()->json(['message' => 'Actividad asignada correctamente'], 200);
+    }
+
+    public function checkUserEnrollment($userId, $actividadId)
+    {
+        $enrollment = DB::table('usu_activ')
+            ->where('user_id', $userId)
+            ->where('actividad_id', $actividadId)
+            ->exists();
+
+        return response()->json(['isEnrolled' => $enrollment]);
     }
 
 }
