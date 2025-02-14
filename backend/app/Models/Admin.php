@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
     protected $table = 'admins';
 
@@ -13,8 +14,14 @@ class Admin extends Model
         'apellido1',
         'apellido2',
         'dni',
-        'fecha_nacimiento',
         'email',
+        'fecha_nacimiento',
         'password',
     ];
+
+    public function actividades(): BelongsToMany
+    {
+        return $this->belongsToMany(Actividad::class,'usu_activ')
+            ->withTimestamps();
+    }
 }

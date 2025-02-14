@@ -36,26 +36,6 @@ class UserController extends Controller
         return response()->json(['message' => 'Usuario creado','data'=>$usuario], 201);
     }
 
-    public function login(Request $request) {
-        $validator = Validator::make($request->all(), [
-           'dni' => 'required|string|max:255',
-           'password' => 'required|string|min:6',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-
-        $user = User::where('dni', $request->get('dni'))->first();
-
-        if ($user) {
-            if (Hash::check($request->get('password'), $user->password)) {
-                return response()->json($user, 200);
-            }
-        }
-        return response()->json(['message' => 'Datos incorrectos'], 400);
-    }
-
     public function show($id) {
         $usuario = User::findOrFail($id);
         return response()->json(['message' => 'Usuario encontrado','data'=>$usuario], 201);
