@@ -56,9 +56,13 @@ export default {
         const response = await axios.get(`http://127.0.0.1:8000/api/actividades/show/${this.id}`);
         this.actividad = response.data;
 
-        // Verificamos si el usuario está apuntado
-        const actividadesApuntadas = JSON.parse(localStorage.getItem(`actividades_apuntadas_${this.userId}`)) || [];
-        this.actividad.isUserEnrolled = actividadesApuntadas.includes(this.actividad.id);
+        // Verificamos si el usuario está apuntado en la base de datos
+        if (this.userId) {
+          const enrollmentResponse = await axios.get(
+            `http://127.0.0.1:8000/api/actividades/check-enrollment/${this.userId}/${this.actividad.id}`
+          );
+          this.actividad.isUserEnrolled = enrollmentResponse.data.isEnrolled;
+        }
       } catch (error) {
         console.error('Error al obtener la actividad:', error);
       }
@@ -69,19 +73,19 @@ export default {
       return `http://localhost:8000/storage/${imagen}`;
     },
 
-    // Cargar el ID del usuario desde localStorage
+    // Cargar el objeto de usuario desde localStorage y obtener su ID
     loadUser() {
-      const id = JSON.parse(localStorage.getItem("id"));
-      if (id) {
-        this.userId = id;
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        this.userId = user.id; // Usamos el ID del objeto usuario almacenado
       }
     },
 
     // Método para apuntarse a la actividad
     async apuntarse(idActividad) {
       try {
-        if (!idActividad) {
-          console.error("Error: idActividad es undefined.");
+        if (!idActividad || !this.userId) {
+          console.error("Error: idActividad o userId son undefined.");
           return;
         }
 
@@ -90,13 +94,6 @@ export default {
           { actividad_id: idActividad },
           { headers: { "Content-Type": "application/json" } }
         );
-
-        // Guardar la actividad en localStorage para este usuario
-        let actividadesUser = JSON.parse(localStorage.getItem(`actividades_apuntadas_${this.userId}`)) || [];
-        if (!actividadesUser.includes(idActividad)) {
-          actividadesUser.push(idActividad);
-          localStorage.setItem(`actividades_apuntadas_${this.userId}`, JSON.stringify(actividadesUser));
-        }
 
         // Actualizamos localmente el estado de la actividad
         if (this.actividad.id === idActividad) {
