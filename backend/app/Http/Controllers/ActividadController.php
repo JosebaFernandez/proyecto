@@ -119,19 +119,32 @@ class ActividadController extends Controller
             $query->whereBetween('hora', [$request->hInicio, $request->hFin]);
         }
 
-        // Si no se aplican filtros, devolver todas las actividades
-        return response()->json($query->get(), 200);
+        // Paginación
+        $actividades = $query->paginate($request->per_page ?? 4); // Paginación con 4 por página
+
+        // Enviar los resultados de la paginación
+        return response()->json([
+            'data' => $actividades->items(),
+            'total' => $actividades->total(),
+            'total_pages' => $actividades->lastPage()
+        ], 200);
     }
+
 
 
 
 
     public function asignarActividades(Request $request, $id): \Illuminate\Http\JsonResponse
     {
-        $request->validate([
-            'actividades' => 'required|array',
-            'actividades.*' => 'exists:actividades,id',
+        $data = json_decode($request->getContent(), true); // Forzar lectura de JSON
+
+        $validator = Validator::make($data, [
+            'actividad_id' => 'required|exists:actividades,id', // Validar solo un ID
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
 
         $user = User::find($id);
 
@@ -139,9 +152,9 @@ class ActividadController extends Controller
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
 
-        $user->actividades()->attach($request->actividades);
+        $user->actividades()->attach($data['actividad_id']); // Adjuntar actividad
 
-        return response()->json(['message' => 'Actividades asignadas correctamente'], 200);
+        return response()->json(['message' => 'Actividad asignada correctamente'], 200);
     }
 
 }

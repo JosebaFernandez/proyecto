@@ -182,6 +182,7 @@ const validarEnvio = async () => {
             //Si es login guarda los datos en LocalStorage y emite el evento
             if (isLogin.value) {
                 successMessage.value = 'Inicio de sesión exitoso.';
+                localStorage.setItem('id', JSON.stringify(response.data.id));
                 localStorage.setItem('nombre', JSON.stringify(response.data.nombre));
                 localStorage.setItem('apellido1', JSON.stringify(response.data.apellido1));
                 localStorage.setItem('apellido2', JSON.stringify(response.data.apellido2));
