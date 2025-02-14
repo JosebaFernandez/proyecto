@@ -1,32 +1,47 @@
-// InicioView.vue
 <template>
   <div class="container">
     <div class="row mt-5">
       <div class="col-11">
-        <ActividadList :filtros="filtros" :current-page="currentPage" :items-per-page="itemsPerPage" @update-total-pages="setTotalPages" />
+        <!-- Pasamos la paginación y los filtros -->
+        <ActividadList 
+          :filtros="filtros" 
+          :current-page="currentPage" 
+          :items-per-page="itemsPerPage" 
+          @update-total-pages="setTotalPages" 
+        />
       </div>
       <div class="col-1">
         <Filtros @aplicar-filtros="actualizarFiltros" />
       </div>
-      <div class="col-12 d-flex justify-content-center">
-        <nav aria-label="Page navigation example">
+
+      <!-- PAGINACIÓN -->
+      <div class="col-12 d-flex justify-content-center mt-4">
+        <nav aria-label="Paginación">
           <ul class="pagination">
+            <!-- Botón Anterior -->
             <li class="page-item" :class="{ disabled: currentPage === 1 }">
-              <a class="page-link text-success" href="#" aria-label="Previous" @click.prevent="prevPage">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
+              <button class="page-link text-success" @click="prevPage" :disabled="currentPage === 1">
+                &laquo;
+              </button>
             </li>
 
-            <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
-              <a class="page-link text-success" href="#" @click.prevent="goToPage(page)">
+            <!-- Botones de Página -->
+            <li 
+              class="page-item" 
+              v-for="page in totalPages" 
+              :key="page" 
+              :class="{ active: currentPage === page }"
+            >
+              <button class="page-link text-success" @click="goToPage(page)">
                 {{ page }}
-              </a>
+              </button>
             </li>
 
+            <!-- Botón Siguiente -->
             <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-              <a class="page-link text-success" href="#" aria-label="Next" @click.prevent="nextPage">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
+              <button class="page-link text-success" @click="nextPage" :disabled="currentPage === totalPages">
+                &raquo;
+              </button>
             </li>
           </ul>
         </nav>
@@ -50,7 +65,7 @@ export default {
       filtros: {},
       currentPage: 1,
       itemsPerPage: 4,
-      totalPages: 1,
+      totalPages: 1, // Se actualizará desde ActividadList.vue
     };
   },
   methods: {
@@ -71,10 +86,11 @@ export default {
     },
     actualizarFiltros(nuevosFiltros) {
       this.filtros = { ...nuevosFiltros };
-      this.currentPage = 1;
+      this.currentPage = 1; // Reinicia la paginación al cambiar los filtros
     },
     setTotalPages(total) {
-      this.totalPages = total;
+      console.log("Total de páginas recibido:", total); // Debug
+      this.totalPages = total || 1; // Evita valores NaN o undefined
     }
   }
 };
