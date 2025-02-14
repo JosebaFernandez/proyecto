@@ -1,8 +1,9 @@
 <template>
     <div class="row">
-        <div v-for="actividad in actividades" :key="actividad.idActividad" class="col-12 col-sm-6 mb-4">
-            <div class="card my-card h-100">
+        <div v-for="actividad in actividades" :key="actividad.id" class="col-12 col-sm-6 mb-4">
+            <div class="card my-card h-100" @click="goToActividadShow(actividad.id)">
                 <div class="row g-0">
+
                     <div class="col-md-4 d-flex">
                         <img :src="getImageUrl(actividad.imagen)" class="img-fluid rounded-start flex-fill" alt="imagen-actividad">
                     </div>
@@ -81,6 +82,9 @@ export default {
         getImageUrl(imagen) {
             return `http://localhost:8000/storage/${imagen}`;
         },
+        goToActividadShow(idActividad) {
+            this.$router.push({ name: "ActividadShow", params: { id: idActividad } });
+        }
     },
 };
 </script>
