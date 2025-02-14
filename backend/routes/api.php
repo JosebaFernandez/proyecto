@@ -17,6 +17,7 @@ Route::controller(ActividadController::class)->group(function () {
     Route::get('/actividades/show/{id}', 'show');
     Route::get('/actividades/index', 'index');
     Route::post('/actividades/asignar/{id}', 'asignarActividades');
+    Route::get('actividades/check-enrollment/{userId}/{actividadId}', 'checkUserEnrollment');
 });
 
 Route::controller(UserController::class)->group(function () {
