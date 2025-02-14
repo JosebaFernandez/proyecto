@@ -8,7 +8,7 @@
         </a>
         <div class="d-flex">
           <!-- Botón para ir a /crear-actividad, solo visible si está autenticado -->
-          <button v-if="isAuthenticated" class="btn btn-outline-light mr-2" type="button" @click="goToCrearActividad">
+          <button v-if="isAdmin" class="btn btn-outline-light mr-2" type="button" @click="goToCrearActividad">
             Crear Actividad
           </button>
           <!-- Botón de Login -->
@@ -48,6 +48,7 @@ export default defineComponent({
     const router = useRouter(); // Instancia de Vue Router
     let modalInstance;
     const isAuthenticated = ref(false); // Variable reactiva para controlar el estado de autenticación
+    const isAdmin = ref(false);
 
     const openModal = () => {
       if (modalInstance) {
@@ -58,6 +59,7 @@ export default defineComponent({
     const logOut = () => {
       localStorage.clear();
       isAuthenticated.value = false; // Actualiza el estado de autenticación
+      isAdmin.value = false; // Actualiza el estado de administrador
       router.push('/'); // Redirige a la página de inicio o cualquier otra página después de cerrar sesión
     };
 
@@ -82,16 +84,25 @@ export default defineComponent({
       if (user && user.dni) {
         isAuthenticated.value = true;
       }
+
+      const role = localStorage.getItem('role');
+      if (role === 'admin') {
+        isAdmin.value = true;
+      }
     });
 
     const handleLoginSuccess = () => {
       isAuthenticated.value = true; // Actualiza el estado de autenticación
+      const role = localStorage.getItem('role');
+      if (role === 'admin') {
+        isAdmin.value = true;
+      }
       if (modalInstance) {
         modalInstance.hide(); // Cierra el modal
       }
     };
 
-    return { openModal, logOut, goToCrearActividad, handleLoginSuccess, isAuthenticated };
+    return { openModal, logOut, goToCrearActividad, handleLoginSuccess, isAuthenticated, isAdmin };
   },
 });
 </script>
