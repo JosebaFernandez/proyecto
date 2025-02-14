@@ -8,6 +8,7 @@
               <div class="row g-0">
                 <div class="col-md-4 d-flex">
                   <img :src="getImageUrl(actividad.imagen)" class="img-fluid rounded-start flex-fill" alt="imagen-actividad">
+
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
@@ -25,7 +26,6 @@
             </div>
           </div>
         </div>
-      </div>
       <div v-else class="text-center text-muted">
         No hay actividades disponibles.
       </div>
