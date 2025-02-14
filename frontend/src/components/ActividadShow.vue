@@ -6,7 +6,7 @@
           <h3>{{ actividad.titulo }}</h3>
         </div>
         <div class="card-body">
-          <img :src="getImageUrl(actividad.imagen)" width="400" class="img-fluid mb-3" alt="imagen-actividad">
+          <img :src="getImageUrl(actividad.imagen)" width="100" class="img-fluid mb-3" alt="imagen-actividad">
           <p>{{ actividad.descripcion }}</p>
           <p><strong>Fecha:</strong> {{ actividad.fecha }}</p>
           <p><strong>Lugar:</strong> {{ actividad.lugar }}</p>
