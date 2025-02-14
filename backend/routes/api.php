@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActividadController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -24,7 +25,11 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/usuarios/register', 'store');
     Route::get('/usuarios/index', 'index');
     Route::get('/usuarios/show/{id}', 'show');
-    Route::post('/usuarios/login', 'login');
 });
 
 Route::post('/auth/login', [AuthController::class, 'login']);
+
+/*
+ * La ruta que se usó para crear el administrador
+ * Route::post('/admin/store', [AdminController::class, 'store']);
+ */
