@@ -9,25 +9,25 @@
               <div class="row g-0">
                 <div class="col-md-4 d-flex">
                   <img :src="getImageUrl(actividad.imagen)" class="img-fluid rounded-start flex-fill" alt="imagen-actividad">
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">{{ actividad.titulo }}</h5>
-                    <p class="card-text">{{ actividad.descripcion }}</p>
-                    <p class="card-text">
-                      <small class="text-body-secondary">{{ actividad.fecha }}</small>
-                    </p>
-                    <p class="card-text">
-                      <small class="text-body-secondary">{{ actividad.lugar }}</small>
-                    </p>
-                    <button v-if="userId && !actividad.isUserEnrolled" class="btn btn-outline-success" @click="apuntarse(actividad.id)">Apuntarse</button>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ actividad.titulo }}</h5>
+                        <p class="card-text">{{ actividad.descripcion }}</p>
+                        <p class="card-text">
+                        <small class="text-body-secondary">{{ actividad.fecha }}</small>
+                        </p>
+                        <p class="card-text">
+                        <small class="text-body-secondary">{{ actividad.lugar }}</small>
+                        </p>
+                        <button v-if="userId && !actividad.isUserEnrolled" class="btn btn-outline-success" @click="apuntarse(actividad.id)">Apuntarse</button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       <div v-else class="text-center text-muted">
         No hay actividades disponibles.
       </div>
