@@ -78,8 +78,8 @@ export default defineComponent({
       tooltipTriggerList.map((tooltipTriggerEl) => new bootstrapTooltip(tooltipTriggerEl));
 
       // Comprobar el estado de autenticación en el localStorage
-      const dni = localStorage.getItem('DNI');
-      if (dni) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user.dni) {
         isAuthenticated.value = true;
       }
     });
