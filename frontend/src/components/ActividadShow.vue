@@ -136,6 +136,17 @@
           }
         } catch (error) {
           console.error('Error al obtener la actividad:', error);
+
+    goToUpdate() {
+      this.$router.push(`/actividades/${this.actividad.id}/editar`);
+    },
+
+    // Método para apuntarse a la actividad
+    async apuntarse(idActividad) {
+      try {
+        if (!idActividad || !this.userId) {
+          console.error("Error: idActividad o userId son undefined.");
+          return;
         }
       },
       formatHora(hora) {
