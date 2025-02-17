@@ -16,8 +16,10 @@ COPY frontend/ .
 # Construir la aplicación de Vue
 RUN npm run build
 
-# Exponer puerto
+# Copiar la carpeta dist al directorio de Nginx
+COPY frontend/dist /var/www/frontend/dist
+
+# Exponer puerto 8080 (si deseas acceder al frontend por este puerto)
 EXPOSE 8080
 
-# Comando para ejecutar el servidor de Vue
-CMD ["npm", "run", "serve"]
+# No es necesario ejecutar npm run serve en producción, lo sirve Nginx.
