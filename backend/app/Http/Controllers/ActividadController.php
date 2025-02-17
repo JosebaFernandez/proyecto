@@ -55,7 +55,7 @@ class ActividadController extends Controller
             'descripcion' => 'required|string|max:255',
             'lugar' => 'required|string|max:255',
             'edad_minima' => 'required|string|max:255',
-            'edad_maxima' => 'required|integer|min:0|gte:edad_minima', // edad_maxima debe ser mayor o igual a edad_minima
+            'edad_maxima' => 'required|integer|min:0|gte:edad_minima',
             'idioma' => 'required|string|max:255',
             'hora' => 'required|string|max:255',
             'fecha' => 'required|date|after_or_equal:today'
