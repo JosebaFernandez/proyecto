@@ -124,7 +124,7 @@ export default {
 }
 
 .actividad-img {
-  height: 270px;
+  height: 210px;
   object-fit: cover;
 }
 

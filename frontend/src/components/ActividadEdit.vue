@@ -76,24 +76,13 @@
             <label class="form-label">Idioma</label>
             <select v-model="form.idioma" class="form-control">
               <option value="">Seleccione un idioma</option>
-              <option value="español">Español</option>
-              <option value="ingles">Inglés</option>
-              <option value="frances">Francés</option>
-              <option value="aleman">Alemán</option>
+              <option value="Español">Español</option>
+              <option value="Ingles">Inglés</option>
+              <option value="Frances">Francés</option>
+              <option value="Alemán">Alemán</option>
             </select>
             <span class="text-danger">{{ errors.idioma }}</span>
           </div>
-
-          <!-- Imagen -->
-          <div class="mb-3">
-            <label class="form-label">Imagen</label>
-            <input type="file" class="form-control" @change="handleImageUpload" />
-            <span class="text-danger">{{ errors.imagen }}</span>
-            <div v-if="previewImage" class="mt-2">
-              <img :src="previewImage" alt="Vista previa" class="img-thumbnail" style="max-width: 200px;">
-            </div>
-          </div>
-
           <!-- Botones -->
           <div class="d-flex gap-2 mb-3">
             <button type="submit" class="btn btn-success">Actualizar Actividad</button>
@@ -131,7 +120,6 @@ export default {
         fecha: "",
         hora: "",
         idioma: "",
-        imagen: null,
       },
       previewImage: null,
       errors: {},
@@ -196,12 +184,6 @@ export default {
       if (!this.form.idioma) {
         this.errors.idioma = "Debe seleccionar un idioma";
       }
-
-      // Validación solo si la imagen se cambia
-      if (this.form.imagen && this.form.imagen.size > 2097152) {
-        this.errors.imagen = "La imagen debe ser menor de 2MB";
-      }
-
       return Object.keys(this.errors).length === 0;
     },
 
@@ -218,12 +200,6 @@ export default {
           formData.append("fecha", this.form.fecha);
           formData.append("hora", this.form.hora);
           formData.append("idioma", this.form.idioma);
-
-          // Solo se agrega imagen si está seleccionada
-          if (this.form.imagen) {
-            formData.append("imagen", this.form.imagen);
-          }
-
           // Se debe utilizar la ruta para actualizar la actividad
           const response = await axios.post(`http://127.0.0.1:8000/api/actividades/update/${this.$route.params.id}`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
