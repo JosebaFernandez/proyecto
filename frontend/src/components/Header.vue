@@ -5,6 +5,12 @@
       <div class="container">
         <a class="navbar-brand" href="/">
           <img src="../assets/logo_grande.svg" alt="Bootstrap" width="250px">
+          <p class="d-flex justify-content-between">
+            <img src="../assets/unnamed.png" alt="Bootstrap" width="50px">
+          <img src="../assets/Flag_of_Palestine.svg.png" alt="Bootstrap" width="50px">
+          <img src="../assets/Flag_of_Ukraine.svg.png" alt="Bootstrap" width="50px">
+          </p>
+
         </a>
         <div class="d-flex">
           <!-- Botón para ir a /crear-actividad, solo visible si está autenticado -->
