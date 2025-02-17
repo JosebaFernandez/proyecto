@@ -33,3 +33,4 @@ Route::post('/auth/login', [AuthController::class, 'login']);
  * La ruta que se usó para crear el administrador
  * Route::post('/admin/store', [AdminController::class, 'store']);
  */
+
