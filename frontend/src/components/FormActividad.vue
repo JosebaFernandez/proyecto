@@ -4,7 +4,7 @@
       <div class="col-8 m-auto">
         <h2 class="mb-4 text-success">Crear Nueva Actividad</h2>
 
-        <!-- Formulario -->
+        <!-- Formulario sin VeeValidate -->
         <form @submit.prevent="submitForm">
           <!-- Título -->
           <div class="mb-3">
@@ -84,7 +84,7 @@
             <span class="text-danger">{{ errors.idioma }}</span>
           </div>
 
-          <!-- Imagen (Obligatoria) -->
+          <!-- Imagen -->
           <div class="mb-3">
             <label class="form-label">Imagen</label>
             <input type="file" class="form-control" @change="handleImageUpload" />
@@ -112,9 +112,11 @@ import { useRouter } from "vue-router";
 export default {
   setup() {
     const router = useRouter();
+
     const volverInicio = () => {
       router.push("/");
     };
+
     return { volverInicio };
   },
   data() {
@@ -138,23 +140,24 @@ export default {
     validateForm() {
       this.errors = {};
 
+      // Validaciones
       if (!this.form.titulo || this.form.titulo.length < 3) {
         this.errors.titulo = "El título es obligatorio y debe tener al menos 3 caracteres";
       }
       if (!this.form.descripcion || this.form.descripcion.length < 10) {
         this.errors.descripcion = "La descripción es obligatoria y debe ser más detallada";
       }
-      if (!this.form.lugar) {
-        this.errors.lugar = "El lugar es obligatorio";
+      if (!this.form.lugar || this.form.lugar.length < 2) {
+        this.errors.lugar = "El lugar es obligatorio y debe ser más específico";
       }
-      if (!this.form.edadMinima || this.form.edadMinima <= 0) {
-        this.errors.edadMinima = "La edad mínima debe ser un número positivo";
+      if (this.form.edadMinima <= 0 || !Number.isInteger(this.form.edadMinima)) {
+        this.errors.edadMinima = "La edad mínima es obligatoria y debe ser un número entero positivo";
       }
-      if (!this.form.edadMaxima || this.form.edadMaxima < this.form.edadMinima) {
-        this.errors.edadMaxima = "La edad máxima debe ser mayor o igual a la mínima";
+      if (this.form.edadMaxima <= 0 || !Number.isInteger(this.form.edadMaxima) || this.form.edadMaxima < this.form.edadMinima) {
+        this.errors.edadMaxima = "La edad máxima debe ser un número mayor o igual a la edad mínima";
       }
-      if (!this.form.fecha) {
-        this.errors.fecha = "La fecha es obligatoria";
+      if (!this.form.fecha || new Date(this.form.fecha) <= new Date()) {
+        this.errors.fecha = "La fecha debe ser en el futuro";
       }
       if (!this.form.hora) {
         this.errors.hora = "La hora es obligatoria";
@@ -162,8 +165,6 @@ export default {
       if (!this.form.idioma) {
         this.errors.idioma = "Debe seleccionar un idioma";
       }
-
-      // Validación de imagen obligatoria
       if (!this.form.imagen) {
         this.errors.imagen = "La imagen es obligatoria";
       } else if (this.form.imagen.size > 2097152) {
@@ -174,18 +175,32 @@ export default {
     },
     async submitForm() {
       if (this.validateForm()) {
-        let formData = new FormData();
-        Object.keys(this.form).forEach(key => {
-          if (this.form[key]) {
-            formData.append(key, this.form[key]);
+        try {
+          let formData = new FormData();
+          formData.append("titulo", this.form.titulo);
+          formData.append("descripcion", this.form.descripcion);
+          formData.append("lugar", this.form.lugar);
+          formData.append("edad_minima", this.form.edadMinima || '');
+          formData.append("edad_maxima", this.form.edadMaxima || '');
+          formData.append("fecha", this.form.fecha);
+          formData.append("hora", this.form.hora);
+          formData.append("idioma", this.form.idioma);
+
+          // Solo se agrega imagen si está seleccionada
+          if (this.form.imagen) {
+            formData.append("imagen", this.form.imagen);
           }
-        });
 
-        await axios.post("http://127.0.0.1:8000/api/actividades/store", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-
-        this.$router.push("/");
+          const response = await axios.post("http://127.0.0.1:8000/api/actividades/store", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          
+          // Redirigir a la página de inicio
+          this.$router.push("/");
+          console.log(response.data);
+        } catch (error) {
+          console.error("Error al crear actividad:", error);
+        }
       }
     },
     handleImageUpload(event) {
@@ -204,7 +219,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  max-width: 900px;
-}
+  .container {
+    max-width: 900px;
+  }
 </style>
