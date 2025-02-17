@@ -26,7 +26,6 @@
                     {{ truncateText(actividad.lugar, 14) }}
                   </small>
                 </p>
-                <button class="btn btn-success w-100 mt-2">Ver más</button>
               </div>
             </div>
           </div>
@@ -125,17 +124,8 @@ export default {
 }
 
 .actividad-img {
-  height: 180px;
+  height: 270px;
   object-fit: cover;
 }
 
-/* Botón de "Ver más" con hover */
-.btn-success {
-  background-color: #28a745;
-  border: none;
-}
-
-.btn-success:hover {
-  background-color: #218838;
-}
 </style>
