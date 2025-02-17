@@ -29,6 +29,7 @@ Route::controller(UserController::class)->group(function () {
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-
-Route::post('/admin/store', [AdminController::class, 'store']);
-
+/*
+ * La ruta que se usó para crear el administrador
+ * Route::post('/admin/store', [AdminController::class, 'store']);
+ */
