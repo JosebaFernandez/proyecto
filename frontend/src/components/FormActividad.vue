@@ -76,10 +76,10 @@
             <label class="form-label">Idioma</label>
             <select v-model="form.idioma" class="form-control">
               <option value="">Seleccione un idioma</option>
-              <option value="español">Español</option>
-              <option value="ingles">Inglés</option>
-              <option value="frances">Francés</option>
-              <option value="aleman">Alemán</option>
+              <option value="Español">Español</option>
+              <option value="Inglés">Inglés</option>
+              <option value="Frances">Francés</option>
+              <option value="Alemán">Alemán</option>
             </select>
             <span class="text-danger">{{ errors.idioma }}</span>
           </div>
