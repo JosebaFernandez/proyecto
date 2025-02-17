@@ -156,6 +156,10 @@ export default {
       }
     },
 
+    goToUpdate() {
+      this.$router.push(`/actividades/${this.actividad.id}/editar`);
+    },
+
     // Método para apuntarse a la actividad
     async apuntarse(idActividad) {
       try {
