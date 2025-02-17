@@ -143,28 +143,30 @@ export default {
   methods: {
     // Método para obtener los datos de la actividad
     async fetchActividadData() {
-  try {
-    const response = await axios.get(`http://127.0.0.1:8000/api/actividades/show/${this.$route.params.id}`);
-    const actividad = response.data;
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/actividades/show/${this.$route.params.id}`);
+        const actividad = response.data;
 
-    // Asignar los valores al formulario
-    this.form.titulo = actividad.titulo;
-    this.form.descripcion = actividad.descripcion;
-    this.form.lugar = actividad.lugar;
-    this.form.edadMinima = actividad.edad_minima;
-    this.form.edadMaxima = actividad.edad_maxima;
-    this.form.fecha = actividad.fecha;
-    this.form.hora = actividad.hora;
-    this.form.idioma = actividad.idioma;
+        // Asignar los valores al formulario
+        this.form.titulo = actividad.titulo;
+        this.form.descripcion = actividad.descripcion;
+        this.form.lugar = actividad.lugar;
+        this.form.edadMinima = actividad.edad_minima;
+        this.form.edadMaxima = actividad.edad_maxima;
+        this.form.fecha = actividad.fecha;
+        this.form.hora = actividad.hora;
+        this.form.idioma = actividad.idioma;
 
-    // Asignar imagen si existe
-    if (actividad.imagen) {
-      this.previewImage = `http://127.0.0.1:8000/storage/${actividad.imagen}`;
-    }
-  } catch (error) {
-    console.error("Error al obtener la actividad:", error);
-  }
-},
+        // Asignar imagen si existe
+        if (actividad.imagen) {
+          this.previewImage = `http://127.0.0.1:8000/storage/${actividad.imagen}`;
+          this.form.imagen = actividad.imagen;  // Conservar la imagen si ya está presente
+        }
+      } catch (error) {
+        console.error("Error al obtener la actividad:", error);
+      }
+    },
+
     // Método para validar los datos del formulario
     validateForm() {
       this.errors = {};
@@ -194,14 +196,15 @@ export default {
       if (!this.form.idioma) {
         this.errors.idioma = "Debe seleccionar un idioma";
       }
-      if (!this.form.imagen) {
-        this.errors.imagen = "La imagen es obligatoria";
-      } else if (this.form.imagen.size > 2097152) {
+
+      // Validación solo si la imagen se cambia
+      if (this.form.imagen && this.form.imagen.size > 2097152) {
         this.errors.imagen = "La imagen debe ser menor de 2MB";
       }
 
       return Object.keys(this.errors).length === 0;
     },
+
     // Método para enviar los datos del formulario
     async submitForm() {
       if (this.validateForm()) {
@@ -234,6 +237,7 @@ export default {
         }
       }
     },
+
     // Método para manejar la carga de la imagen
     handleImageUpload(event) {
       const file = event.target.files[0];
@@ -244,6 +248,10 @@ export default {
           this.previewImage = e.target.result;
         };
         reader.readAsDataURL(file);
+      }
+      // Si no se carga ninguna imagen, se muestra la imagen previa de la actividad
+      else {
+        this.previewImage = this.form.imagen ? `http://127.0.0.1:8000/storage/${this.form.imagen}` : null;
       }
     },
   },
