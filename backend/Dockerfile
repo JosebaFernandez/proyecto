@@ -1,5 +1,5 @@
-# Usar imagen de PHP con Apache
-FROM php:8.1-apache
+# Usar imagen de PHP con Apache versión 8.2
+FROM php:8.2-apache
 
 # Instalar dependencias de Laravel y Composer
 RUN apt-get update && apt-get install -y \
