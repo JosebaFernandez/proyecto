@@ -1,18 +1,77 @@
 $green: #28a745;
 $white: #fff;
+$shadow-color: rgba(0, 0, 0, 0.1);
+$hover-shadow-color: rgba(0, 0, 0, 0.2);
+$border-radius: 12px;
+$small-radius: 8px;
+$font-primary: 1rem;
+$font-title: 1.8rem;
+$max-width-titulo: 43ch;
+$max-width-descripcion: 110ch;
+$gap-spacing: 20px;
+$toast-bg: $green;
+$toast-text-color: $white;
 
-.my-card {
+.custom-card {
+  border: none;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 10px $shadow-color;
+  overflow: hidden;
+  background: $white;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.03);
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-  }
 
   a {
     text-decoration: none;
   }
+}
+
+.card-body {
+  display: flex;
+  flex-direction: row;
+  gap: $gap-spacing;
+  padding: $gap-spacing;
+}
+
+.image-container {
+  flex: 1;
+  max-width: 25%;
+
+  img {
+    width: 100%;
+    border-radius: $small-radius;
+  }
+}
+
+.content-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.actividad-titulo {
+  font-size: $font-title;
+  font-weight: bold;
+  color: #333;
+  word-wrap: break-word;
+  max-width: $max-width-titulo;
+}
+
+.actividad-descripcion {
+  font-size: $font-primary;
+  color: #555;
+  margin-top: 10px;
+  word-wrap: break-word;
+  max-width: $max-width-descripcion;
+}
+
+.mr-2 {
+  margin-right: 10px;
+}
+
+
+.bi {
+  width: 20px;
+  height: 20px;
 }
 
 .pagination {
@@ -25,5 +84,4 @@ $white: #fff;
       }
     }
   }
-
 }
