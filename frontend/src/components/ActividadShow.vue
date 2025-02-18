@@ -34,7 +34,7 @@
                 <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/>
                 <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
               </svg>
-              {{ actividad.fecha }}
+              {{ formatDate(actividad.fecha) }}
             </p>
             <p class="d-flex align-items-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-map me-2" viewBox="0 0 16 16">
@@ -157,6 +157,13 @@
       if (!hora) return ""; // Si no hay hora, devolver vacío
       return hora.slice(0, 5); // Toma solo "HH:mm"
       }, 
+      formatDate(date) {
+      return new Date(date).toLocaleDateString("es-ES", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric"
+        });
+      },
 
       // Método para obtener la URL de la imagen
       getImageUrl(imagen) {
