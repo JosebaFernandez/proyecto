@@ -8,7 +8,7 @@
               <img :src="getImageUrl(actividad.imagen)" class="card-img-top actividad-img" alt="imagen-actividad">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title text-black">{{ truncateText(actividad.titulo, 20) }}</h5>
-                <p class="card-text text-muted flex-grow-1">{{ truncateText(actividad.descripcion, 20) }}</p>
+                <p class="card-text text-muted flex-grow-1">{{ truncateText(actividad.descripcion, 50) }}</p>
                 <hr />
                 <p class="card-text d-flex justify-content-between">
                   <small class="text-secondary d-flex align-items-center">

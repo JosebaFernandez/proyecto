@@ -79,7 +79,7 @@
               <option value="Español">Español</option>
               <option value="Inglés">Inglés</option>
               <option value="Frances">Francés</option>
-              <option value="Alemán">Alemán</option>
+              <option value="Alemán">Alemán</option> 
             </select>
             <span class="text-danger">{{ errors.idioma }}</span>
           </div>
