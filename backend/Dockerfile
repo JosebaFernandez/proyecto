@@ -1,35 +1,34 @@
-# Usar imagen de PHP con Apache versión 8.2
+# Usa la imagen oficial de PHP con Apache
 FROM php:8.2-apache
 
-# Instalar dependencias de Laravel y Composer
+# Instala dependencias del sistema
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
     zip \
+    unzip \
     git \
-    libzip-dev \
+    curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql zip \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    && docker-php-ext-install pdo pdo_mysql gd
 
-# Habilitar mod_rewrite de Apache
-RUN a2enmod rewrite
+# Instala Composer
+COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# Establecer directorio de trabajo
+# Configura el directorio de trabajo
 WORKDIR /var/www/html
 
-# Copiar archivos del backend (Laravel)
-COPY backend/ .
+# Copia los archivos del backend
+COPY . .
 
-# Instalar dependencias de Laravel
+# Instala las dependencias de Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# Configuración de permisos para Laravel (si es necesario)
-RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Da permisos a la carpeta de almacenamiento
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Exponer el puerto 80
+# Expone el puerto 80
 EXPOSE 80
 
 # Comando para iniciar Apache

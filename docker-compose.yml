@@ -1,60 +1,49 @@
-version: '3'
+version: '3.8'
 
 services:
-  frontend:
-    build:
-      context: .
-      dockerfile: ./frontend/Dockerfile
-    ports:
-      - "8080:8080"
-    networks:
-      - app-network
-    depends_on:
-      - backend
-
   backend:
-    build:
-      context: .
-      dockerfile: ./backend/Dockerfile
-    ports:
-      - "8000:80"
-    volumes:
-      - ./backend:/var/www/html
+    build: 
+      context: ./backend
+    container_name: backend
+    restart: always
+    depends_on:
+      - nginx
     environment:
+      - APP_ENV=production
       - DB_CONNECTION=mysql
-      - DB_HOST=172.20.227.241
+      - DB_HOST=172.20.227.241  
       - DB_PORT=3306
       - DB_DATABASE=grupo1_2425
       - DB_USERNAME=grupo1_2425
-      - DB_PASSWORD=FeGh-[69z_8)@ktC
-    depends_on:
-      - database
+      - DB_PASSWORD=FeGh-[69z_8)@ktC  
+    volumes:
+      - ./backend:/var/www/html
     networks:
-      - app-network
+      - app_network
+
+  frontend:
+    build: 
+      context: ./frontend
+    container_name: frontend
+    restart: always
+    depends_on:
+      - backend
+    networks:
+      - app_network
 
   nginx:
-    image: nginx:latest
-    volumes:
-    - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-    - ./nginx/conf.d:/etc/nginx/conf.d  # Agregamos esta línea
-    - ./frontend/dist:/var/www/frontend/dist
-
-    ports:
-      - "80:80"
+    image: nginx:alpine
+    container_name: nginx
+    restart: always
     depends_on:
       - frontend
       - backend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
     networks:
-      - app-network
-
-  database: 
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel
-    networks:
-      - app-network
+      - app_network
 
 networks:
-  app-network:
-    driver: bridge
+  app_network:

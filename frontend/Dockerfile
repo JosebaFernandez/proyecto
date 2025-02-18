@@ -1,25 +1,23 @@
-# Usar imagen de Node.js
-FROM node:18
+# Usa Node.js para compilar el frontend
+FROM node:18 AS build
 
-# Establecer directorio de trabajo
+# Configura el directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos package.json y package-lock.json
-COPY frontend/package*.json ./
+# Copia los archivos del frontend
+COPY . .
 
-# Instalar dependencias
-RUN npm install
+# Instala dependencias y construye el proyecto
+RUN npm install && npm run build
 
-# Copiar el resto de archivos del frontend
-COPY frontend/ .
+# Usa Nginx para servir los archivos estáticos
+FROM nginx:alpine
 
-# Construir la aplicación de Vue
-RUN npm run build
+# Copia los archivos estáticos generados en la fase de compilación
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copiar la carpeta dist al directorio de Nginx
-COPY frontend/dist /var/www/frontend/dist
+# Expone el puerto 80
+EXPOSE 80
 
-# Exponer puerto 8080 (si deseas acceder al frontend por este puerto)
-EXPOSE 8080
-
-# No es necesario ejecutar npm run serve en producción, lo sirve Nginx.
+# Inicia Nginx
+CMD ["nginx", "-g", "daemon off;"]
