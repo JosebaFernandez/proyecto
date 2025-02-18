@@ -81,7 +81,7 @@ La aplicación permite:
 Para realizar pruebas en la aplicación, puedes utilizar los siguientes usuarios:  
 ```
 Usuario normal: ID 12345678A | Contraseña: 12345678
-Administrador: ID 58019635L | Contraseña: 12345678
+Administrador: ID 12345678D | Contraseña: 12345678
 ```
 
 ---
