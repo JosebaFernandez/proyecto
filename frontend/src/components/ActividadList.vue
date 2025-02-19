@@ -40,6 +40,8 @@
 
 <script>
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
+const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 
 export default {
   name: "ActividadList",
@@ -78,7 +80,7 @@ export default {
       try {
         console.log(`Cargando página ${this.currentPage} con ${this.itemsPerPage} actividades por página`);
 
-        const response = await axios.get("http://127.0.0.1:8000/api/actividades/index", {
+        const response = await axios.get(`${this.API_URL}actividades/index`, {
           params: {
             ...this.filtros,
             page: this.currentPage,
@@ -97,7 +99,7 @@ export default {
       }
     },
     getImageUrl(imagen) {
-      return `http://localhost:8000/storage/${imagen}`;
+      return `${this.IMAGE_URL}${imagen}`;
     },
     goToActividadShow(idActividad) {
       this.$router.push({ name: "ActividadShow", params: { id: idActividad } });
