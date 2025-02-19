@@ -29,7 +29,7 @@ La aplicación permite:
 
 ---
 
-## 📥 Instalación y Configuración  
+## 💾 Instalación y Configuración  
 
 ### **Requisitos Previos**  
 - PHP 8.2  
@@ -40,8 +40,8 @@ La aplicación permite:
 ### **Pasos para la Instalación**  
 1. Clonar el repositorio:  
    ```sh
-   git clone https://github.com/usuario/gestion-actividades.git
-   cd gestion-actividades
+   git clone https://github.com/JosebaFernandez/proyecto.git
+   cd proyecto
    ```  
 2. Instalar dependencias del backend:  
    ```sh
@@ -73,7 +73,7 @@ La aplicación permite:
 - ➕ Crear nuevas actividades.  
 - ✏️ Editar y actualizar actividades existentes.  
 - ❌ Eliminar actividades si es necesario.  
-- 🛠️ Gestionar el mantenimiento de las actividades.  
+- 🔧 Gestionar el mantenimiento de las actividades.  
 
 ---
 
@@ -104,8 +104,16 @@ La aplicación tiene una interfaz amigable con colores frescos y neutros para un
 
 ---
 
-## 🔮 Futuras Implementaciones  
-- 📌 Despliegue en un servidor en producción.  
+## 🔮 Acceso a la Aplicación Desplegada  
+La aplicación está desplegada y accesible dentro de la red de Egibide. Para acceder, debes estar conectado a la red y utilizar la siguiente dirección IP:
+```
+IP: 172.20.228.31
+```
+
+---
+
+## 🔍 Futuras Implementaciones  
+
 - ⚡ Optimización de rendimiento y código.  
 - 📱 Mejora de responsividad en dispositivos móviles.  
 
@@ -121,7 +129,7 @@ Si deseas contribuir al proyecto:
 
 ---
 
-## 📜 Licencia  
+## 🐝 Licencia  
 Este proyecto está bajo la licencia **MIT**. Consulta el archivo `LICENSE` para más información.  
 
 ---
@@ -134,4 +142,6 @@ Este proyecto está bajo la licencia **MIT**. Consulta el archivo `LICENSE` para
     - leire.delasheras@ikasle.egibide.org  
 
 © 2025 Joseba Fernández - Leire de las Heras - Oier Albéniz. Todos los derechos reservados.  
+
+Mención especial a Erik Ranea por su apoyo y contribución al proyecto.
 
