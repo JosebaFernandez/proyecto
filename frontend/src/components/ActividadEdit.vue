@@ -135,7 +135,7 @@ export default {
     // Método para obtener los datos de la actividad
     async fetchActividadData() {
       try {
-        const response = await axios.get(`${this.API_URL}actividades/show/${this.$route.params.id}`);
+        const response = await axios.get(`http://172.20.228.31:8000/api/actividades/show/${this.$route.params.id}`);
         const actividad = response.data;
 
         // Asignar los valores al formulario
@@ -150,7 +150,7 @@ export default {
 
         // Asignar imagen si existe
         if (actividad.imagen) {
-          this.previewImage = `${this.IMAGE_URL}${actividad.imagen}`;
+          this.previewImage = `http://172.20.228.31:8000/storage/${actividad.imagen}`;
           this.form.imagen = actividad.imagen;  // Conservar la imagen si ya está presente
         }
       } catch (error) {
@@ -204,7 +204,8 @@ export default {
           formData.append("hora", this.form.hora);
           formData.append("idioma", this.form.idioma);
           // Se debe utilizar la ruta para actualizar la actividad
-          const response = await axios.post(`${this.API_URL}actividades/update/${this.$route.params.id}`, formData, {
+          const response = await axios.post(`'htt:
+//127.0.0.1:8000/api/actividades/update/${this.$route.params.id}`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
           });
 
@@ -230,7 +231,7 @@ export default {
       }
       // Si no se carga ninguna imagen, se muestra la imagen previa de la actividad
       else {
-        this.previewImage = this.form.imagen ? `${this.IMAGE_URL}${this.form.imagen}` : null;
+        this.previewImage = this.form.imagen ? `http://172.20.228.31:8000/storage/${this.form.imagen}` : null;
       }
     },
   },
