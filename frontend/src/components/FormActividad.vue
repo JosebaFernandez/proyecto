@@ -108,6 +108,7 @@
 <script>
 import axios from "axios";
 import { useRouter } from "vue-router";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default {
   setup() {
@@ -191,7 +192,7 @@ export default {
             formData.append("imagen", this.form.imagen);
           }
 
-          const response = await axios.post("http://127.0.0.1:8000/api/actividades/store", formData, {
+          const response = await axios.post(`${this.API_URL}actividades/store`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
           });
           

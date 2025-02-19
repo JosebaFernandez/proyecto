@@ -96,6 +96,8 @@
   <script>
   import axios from 'axios';
   import { Modal } from 'bootstrap';
+  const API_URL = import.meta.env.VITE_API_URL;
+  const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 
   export default {
     name: 'ActividadShow',
@@ -124,13 +126,13 @@
       // Obtener los detalles de la actividad
       async fetchActividad() {
         try {
-          const response = await axios.get(`http://127.0.0.1:8000/api/actividades/show/${this.id}`);
+          const response = await axios.get(`${this.API_URL}actividades/show/${this.id}`);
           this.actividad = response.data;
 
           // Verificamos si el usuario está apuntado en la base de datos
           if (this.userId) {
             const enrollmentResponse = await axios.get(
-              `http://127.0.0.1:8000/api/actividades/check-enrollment/${this.userId}/${this.actividad.id}`
+              `${this.API_URL}actividades/check-enrollment/${this.userId}/${this.actividad.id}`
             );
             this.actividad.isUserEnrolled = enrollmentResponse.data.isEnrolled;
           }
@@ -167,7 +169,7 @@
 
       // Método para obtener la URL de la imagen
       getImageUrl(imagen) {
-        return `http://localhost:8000/storage/${imagen}`;
+        return `${this.IMAGE_URL}${imagen}`;
       },
 
       // Cargar el objeto de usuario desde localStorage y obtener su ID
@@ -187,7 +189,7 @@
           }
 
           const response = await axios.post(
-            `http://127.0.0.1:8000/api/actividades/asignar/${this.userId}`,
+            `${this.API_URL}actividades/asignar/${this.userId}`,
             { actividad_id: idActividad },
             { headers: { "Content-Type": "application/json" } }
           );
@@ -213,7 +215,7 @@
 
       async confirmDelete() {
         try {
-          await axios.post(`http://127.0.0.1:8000/api/actividades/destroy/${this.actividadIdToDelete}`);
+          await axios.post(`${this.API_URL}actividades/destroy/${this.actividadIdToDelete}`);
           this.deleteModal.hide();
           // Redirigir o actualizar la vista después de borrar la actividad
           this.$router.push('/');

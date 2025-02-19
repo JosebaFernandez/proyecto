@@ -1,23 +1,31 @@
-# Usa Node.js para compilar el frontend
-FROM node:18 AS build
+# Usa una imagen base de Node.js para la construcción de la app
+FROM node:18-alpine as builder
 
-# Configura el directorio de trabajo
+# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia los archivos del frontend
+# Copia el archivo package.json y package-lock.json
+COPY package*.json ./
+
+# Instala las dependencias
+RUN npm install
+
+# Copia todo el resto del código
 COPY . .
 
-# Instala dependencias y construye el proyecto
-RUN npm install && npm run build
+# Construye la aplicación Vue
+RUN npm run build
 
-# Usa Nginx para servir los archivos estáticos
+# Utiliza una imagen nginx para servir los archivos estáticos
 FROM nginx:alpine
 
-# Copia los archivos estáticos generados en la fase de compilación
-COPY --from=build /app/dist /usr/share/nginx/html
+# Copia los archivos de la construcción del paso anterior l servidor Nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
+# Copia el archivo de configuración de Nginx personalizado
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expone el puerto 80
 EXPOSE 80
 
-# Inicia Nginx
+# Ejecuta el servidor Nginx
 CMD ["nginx", "-g", "daemon off;"]

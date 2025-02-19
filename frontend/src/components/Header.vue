@@ -40,6 +40,7 @@ import { Modal as bootstrapModal, Tooltip as bootstrapTooltip } from 'bootstrap'
 import { useRouter } from 'vue-router';
 import ModalAcceso from './ModalAcceso.vue';
 
+
 export default defineComponent({
   components: {
     ModalAcceso,

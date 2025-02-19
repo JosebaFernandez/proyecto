@@ -91,6 +91,7 @@
 <script setup>
 import { ref, defineEmits } from 'vue';
 import axios from 'axios';
+const API_URL = import.meta.env.VITE_API_URL;
 
 // Variables reactivas para almacenar los datos del formulario
 const nombre = ref('');
@@ -160,7 +161,7 @@ const validarEnvio = async () => {
     try {
 
         //Genera la URL de la solicitud con un operador ternario
-        const url = isLogin.value ? 'http://localhost:8000/api/auth/login' : 'http://localhost:8000/api/usuarios/register';
+        const url = isLogin.value ? `${this.API_URL}auth/login` : `${this.API_URL}usuarios/register`;
 
         //Crea un objeto con los datos del formulario. En función de si es login o registro mandará unos datos u otros
         const data = isLogin.value
