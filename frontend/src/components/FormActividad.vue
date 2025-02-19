@@ -192,7 +192,7 @@ export default {
             formData.append("imagen", this.form.imagen);
           }
 
-          const response = await axios.post(`${this.API_URL}actividades/store`, formData, {
+          const response = await axios.post(`http://172.20.228.31:8000/api/actividades/store`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
           });
           

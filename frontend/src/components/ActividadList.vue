@@ -80,7 +80,7 @@ export default {
       try {
         console.log(`Cargando página ${this.currentPage} con ${this.itemsPerPage} actividades por página`);
 
-        const response = await axios.get(`${this.API_URL}actividades/index`, {
+        const response = await axios.get(`http://172.20.228.31:8000/api/actividades/index`, {
           params: {
             ...this.filtros,
             page: this.currentPage,
@@ -99,7 +99,7 @@ export default {
       }
     },
     getImageUrl(imagen) {
-      return `${this.IMAGE_URL}${imagen}`;
+      return `http://172.20.228.31:8000/storage/${imagen}`;
     },
     goToActividadShow(idActividad) {
       this.$router.push({ name: "ActividadShow", params: { id: idActividad } });
